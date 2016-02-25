@@ -38,3 +38,7 @@ test_db*
 **/user.conf
 **/out.log
 **/user.log4j.properties
+
+# Nodes
+node1
+node2
