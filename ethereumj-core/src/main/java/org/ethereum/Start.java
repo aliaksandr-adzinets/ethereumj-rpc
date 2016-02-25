@@ -4,6 +4,7 @@ import org.ethereum.cli.CLIInterface;
 import org.ethereum.config.SystemProperties;
 import org.ethereum.facade.Ethereum;
 import org.ethereum.facade.EthereumFactory;
+import org.ethereum.rpc.JsonRpcListener;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -14,7 +15,7 @@ import java.net.URISyntaxException;
  */
 public class Start {
 
-    public static void main(String args[]) throws IOException, URISyntaxException {
+    public static void main(String args[]) throws Exception {
         CLIInterface.call(args);
 
         if (!SystemProperties.getDefault().blocksLoader().equals("")) {
@@ -26,6 +27,9 @@ public class Start {
 
         if (!SystemProperties.getDefault().blocksLoader().equals(""))
             ethereum.getBlockLoader().loadBlocks();
-    }
 
+        if (CONFIG.isRpcEnabled()) {
+            new JsonRpcListener(ethereum).start();
+        }
+    }
 }
