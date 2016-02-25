@@ -57,6 +57,9 @@ public class PeerServer {
 
         bossGroup = new NioEventLoopGroup(1);
         workerGroup = new NioEventLoopGroup();
+        // TODO review listening use
+        listening = true;
+
 
         ethereumChannelInitializer = ctx.getBean(EthereumChannelInitializer.class, "");
 
@@ -87,6 +90,8 @@ public class PeerServer {
             channelFuture.channel().closeFuture().sync();
             logger.debug("Connection is closed");
 
+            // TODO review listening use
+            listening = false;
         } catch (Exception e) {
             logger.debug("Exception: {} ({})", e.getMessage(), e.getClass().getName());
             throw new Error("Server Disconnected");

@@ -25,6 +25,7 @@ public class TransactionReceipt {
 
     private byte[] postTxState = EMPTY_BYTE_ARRAY;
     private byte[] cumulativeGas = EMPTY_BYTE_ARRAY;
+    private byte[] gasUsed = EMPTY_BYTE_ARRAY;
     private Bloom bloomFilter = new Bloom();
     private List<LogInfo> logInfoList = new ArrayList<>();
 
@@ -70,10 +71,11 @@ public class TransactionReceipt {
     }
 
 
-    public TransactionReceipt(byte[] postTxState, byte[] cumulativeGas,
+    public TransactionReceipt(byte[] postTxState, byte[] cumulativeGas, byte[] gasUsed,
                               Bloom bloomFilter, List<LogInfo> logInfoList) {
         this.postTxState = postTxState;
         this.cumulativeGas = cumulativeGas;
+        this.gasUsed = gasUsed;
         this.bloomFilter = bloomFilter;
         this.logInfoList = logInfoList;
     }
@@ -142,6 +144,7 @@ public class TransactionReceipt {
 
         byte[] postTxStateRLP = RLP.encodeElement(this.postTxState);
         byte[] cumulativeGasRLP = RLP.encodeElement(this.cumulativeGas);
+        byte[] gasUsedRLP = RLP.encodeElement(this.gasUsed);
         byte[] bloomRLP = RLP.encodeElement(this.bloomFilter.data);
 
         final byte[] logInfoListRLP;
@@ -174,6 +177,10 @@ public class TransactionReceipt {
     public void setCumulativeGas(long cumulativeGas) {
         this.cumulativeGas = BigIntegers.asUnsignedByteArray(BigInteger.valueOf(cumulativeGas));
         rlpEncoded = null;
+    }
+
+    public void setGasUsed(long gasUsed) {
+        this.gasUsed = BigIntegers.asUnsignedByteArray(BigInteger.valueOf(gasUsed));
     }
 
     public void setCumulativeGas(byte[] cumulativeGas) {

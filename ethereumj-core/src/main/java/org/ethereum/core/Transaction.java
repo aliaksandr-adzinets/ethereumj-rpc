@@ -32,7 +32,9 @@ import static org.ethereum.util.ByteUtil.ZERO_BYTE_ARRAY;
  * There are two types of transactions: those which result in message calls
  * and those which result in the creation of new contracts.
  */
-public class Transaction {
+
+// TODO review implements SerializableObejct
+public class Transaction implements SerializableObject {
 
     private static final Logger logger = LoggerFactory.getLogger(Transaction.class);
     private static final BigInteger DEFAULT_GAS_PRICE = new BigInteger("10000000000000");
@@ -496,10 +498,17 @@ public class Transaction {
      * @deprecated use {@link Transaction#create(String, BigInteger, BigInteger, BigInteger, BigInteger, Integer)} instead
      */
     public static Transaction create(String to, BigInteger amount, BigInteger nonce, BigInteger gasPrice, BigInteger gasLimit){
+        return create(to, amount, nonce, gasPrice, gasLimit, null);
+    }
+
+    public static Transaction create(String to, BigInteger amount, BigInteger nonce, BigInteger gasPrice, BigInteger gasLimit, String data){
+
+        byte[] decodedData = data == null ? null : Hex.decode(data);
+
         return new Transaction(BigIntegers.asUnsignedByteArray(nonce),
                 BigIntegers.asUnsignedByteArray(gasPrice),
                 BigIntegers.asUnsignedByteArray(gasLimit),
-                Hex.decode(to),
+                to != null ? Hex.decode(to) : null,
                 BigIntegers.asUnsignedByteArray(amount),
                 null);
     }

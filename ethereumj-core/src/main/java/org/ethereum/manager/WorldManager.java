@@ -81,6 +81,14 @@ public class WorldManager {
 
     @PostConstruct
     public void init() {
+        // TODO review hardcoded string
+        byte[] cowAddr = HashUtil.sha3("cow".getBytes());
+        wallet.importKey(cowAddr);
+
+        String secret = config.coinbaseSecret();
+        byte[] cbAddr = HashUtil.sha3(secret.getBytes());
+        wallet.importKey(cbAddr);
+
         loadBlockchain();
         initSemaphore.countDown();
     }
@@ -217,4 +225,9 @@ public class WorldManager {
         repository.close();
     }
 
+    // TODO Review sync manager exposure
+    public SyncManager getSyncManager() { return syncManager; }
+
+    // TODO expose coin base address
+    // public byte[] getCoinBaseAddress() { return coinBaseAddress; }
 }
