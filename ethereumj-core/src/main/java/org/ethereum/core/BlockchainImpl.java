@@ -6,8 +6,13 @@ import org.ethereum.crypto.HashUtil;
 import org.ethereum.datasource.HashMapDB;
 import org.ethereum.db.BlockStore;
 import org.ethereum.db.ByteArrayWrapper;
+<<<<<<< 139025612de1de7d0badd4c333e602dedcc5ffde
 import org.ethereum.db.RepositoryImpl;
 import org.ethereum.db.TransactionStore;
+=======
+import org.ethereum.db.ReceiptStore;
+import org.ethereum.db.TransactionInfo;
+>>>>>>> RSK-320 First bunch of changes related to TransactionReceive storing
 import org.ethereum.listener.EthereumListener;
 import org.ethereum.listener.EthereumListenerAdapter;
 import org.ethereum.manager.AdminInfo;
@@ -105,7 +110,11 @@ public class BlockchainImpl implements Blockchain, org.ethereum.facade.Blockchai
     private BlockStore blockStore;
 
     @Autowired
+<<<<<<< 139025612de1de7d0badd4c333e602dedcc5ffde
     private TransactionStore transactionStore;
+=======
+    private ReceiptStore receiptsStore;
+>>>>>>> RSK-320 First bunch of changes related to TransactionReceive storing
 
     private Block bestBlock;
 
@@ -221,6 +230,7 @@ public class BlockchainImpl implements Blockchain, org.ethereum.facade.Blockchai
     @Override
     public TransactionInfo getTransactionInfo(byte[] hash) {
 
+<<<<<<< 139025612de1de7d0badd4c333e602dedcc5ffde
         List<TransactionInfo> infos = transactionStore.get(hash);
 
         if (infos == null || infos.isEmpty())
@@ -245,10 +255,25 @@ public class BlockchainImpl implements Blockchain, org.ethereum.facade.Blockchai
             return null;
         }
 
+=======
+        TransactionInfo txInfo = receiptsStore.get(hash);
+
+        if (txInfo == null)
+            return null;
+
+>>>>>>> RSK-320 First bunch of changes related to TransactionReceive storing
         Transaction tx = this.getBlockByHash(txInfo.getBlockHash()).getTransactionsList().get(txInfo.getIndex());
         txInfo.setTransaction(tx);
 
         return txInfo;
+<<<<<<< 139025612de1de7d0badd4c333e602dedcc5ffde
+=======
+    }
+
+    @Override
+    public TransactionReceipt getTransactionReceiptByHash(byte[] hash) {
+        throw new UnsupportedOperationException("TODO: will be implemented soon "); // FIXME: go and fix me
+>>>>>>> RSK-320 First bunch of changes related to TransactionReceive storing
     }
 
     @Override

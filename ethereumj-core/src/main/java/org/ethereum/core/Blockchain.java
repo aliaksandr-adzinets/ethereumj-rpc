@@ -1,5 +1,7 @@
 package org.ethereum.core;
 
+import org.ethereum.db.TransactionInfo;
+
 import java.math.BigInteger;
 import java.util.List;
 
@@ -19,7 +21,13 @@ public interface Blockchain {
 
     Block getBestBlock();
 
+<<<<<<< 139025612de1de7d0badd4c333e602dedcc5ffde
     boolean hasParentOnTheChain(Block block);
+=======
+    TransactionInfo getTransactionInfo(byte[] hash);
+    
+    public boolean hasParentOnTheChain(Block block);
+>>>>>>> RSK-320 First bunch of changes related to TransactionReceive storing
 
     void close();
 
