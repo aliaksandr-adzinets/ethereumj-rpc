@@ -819,6 +819,7 @@ public class BlockchainImpl implements Blockchain, org.ethereum.facade.Blockchai
         long saveTime = System.nanoTime();
         int i = 1;
         long totalGasUsed = 0;
+        long gasUsed = 0;
         List<TransactionReceipt> receipts = new ArrayList<>();
         List<TransactionExecutionSummary> summaries = new ArrayList<>();
 
@@ -833,7 +834,8 @@ public class BlockchainImpl implements Blockchain, org.ethereum.facade.Blockchai
             executor.go();
             TransactionExecutionSummary summary = executor.finalization();
 
-            totalGasUsed += executor.getGasUsed();
+            gasUsed = executor.getGasUsed();
+            totalGasUsed += gasUsed;
 
             track.commit(block.getNumber());
             TransactionReceipt receipt = executor.getReceipt();
