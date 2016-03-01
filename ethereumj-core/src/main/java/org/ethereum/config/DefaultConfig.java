@@ -78,4 +78,15 @@ public class DefaultConfig {
         CachingDataSource cachingDataSource = new CachingDataSource(ds);
         return new TransactionStore(cachingDataSource);
     }
+
+    @Bean
+    public ReceiptStore receiptStore(){
+
+        KeyValueDataSource ds = new LevelDbDataSource("receipts");
+        ds.init();
+
+        ReceiptStore store = new ReceiptStoreImpl(ds);
+
+        return store;
+    }
 }
