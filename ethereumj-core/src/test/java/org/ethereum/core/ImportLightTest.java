@@ -9,6 +9,7 @@ import org.ethereum.util.blockchain.StandaloneBlockchain;
 import org.ethereum.core.genesis.GenesisLoader;
 import org.ethereum.crypto.ECKey;
 import org.ethereum.datasource.HashMapDB;
+import org.ethereum.datasource.KeyValueDataSource;
 import org.ethereum.db.*;
 import org.ethereum.listener.EthereumListenerAdapter;
 import org.ethereum.mine.Ethash;
@@ -20,6 +21,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.spongycastle.util.encoders.Hex;
+import org.springframework.context.annotation.Bean;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -30,6 +32,17 @@ import java.util.Collections;
  * Created by Anton Nashatyrev on 29.12.2015.
  */
 public class ImportLightTest {
+
+    @Bean
+    public ReceiptStore receiptStore(){
+
+        KeyValueDataSource ds = new HashMapDB();
+        ds.init();
+
+        ReceiptStore store = new ReceiptStoreImpl(ds);
+
+        return store;
+    }
 
     @BeforeClass
     public static void setup() {

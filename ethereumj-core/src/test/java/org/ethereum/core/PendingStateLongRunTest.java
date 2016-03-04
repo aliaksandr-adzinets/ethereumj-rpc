@@ -2,9 +2,8 @@ package org.ethereum.core;
 
 import org.ethereum.config.CommonConfig;
 import org.ethereum.datasource.HashMapDB;
-import org.ethereum.db.ByteArrayWrapper;
-import org.ethereum.db.IndexedBlockStore;
-import org.ethereum.db.RepositoryImpl;
+import org.ethereum.datasource.KeyValueDataSource;
+import org.ethereum.db.*;
 import org.ethereum.listener.EthereumListenerAdapter;
 import org.ethereum.manager.AdminInfo;
 import org.ethereum.validator.DependentBlockHeaderRuleAdapter;

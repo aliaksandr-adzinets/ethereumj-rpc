@@ -10,6 +10,8 @@ import org.ethereum.crypto.ECKey;
 import org.ethereum.datasource.HashMapDB;
 import org.ethereum.db.ByteArrayWrapper;
 import org.ethereum.db.IndexedBlockStore;
+import org.ethereum.db.ReceiptStore;
+import org.ethereum.db.ReceiptStoreImpl;
 import org.ethereum.db.RepositoryImpl;
 import org.ethereum.listener.EthereumListener;
 import org.ethereum.listener.EthereumListenerAdapter;
