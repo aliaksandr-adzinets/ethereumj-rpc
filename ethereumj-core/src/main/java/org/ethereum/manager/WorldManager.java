@@ -2,6 +2,7 @@ package org.ethereum.manager;
 
 import org.ethereum.config.SystemProperties;
 import org.ethereum.core.*;
+import org.ethereum.crypto.HashUtil;
 import org.ethereum.db.BlockStore;
 import org.ethereum.db.ByteArrayWrapper;
 import org.ethereum.db.RepositoryImpl;
@@ -46,6 +47,9 @@ public class WorldManager {
 
     @Autowired
     private RepositoryImpl repository;
+
+    @Autowired
+    private Wallet wallet;
 
     @Autowired
     private PeerClient activePeer;
@@ -230,4 +234,9 @@ public class WorldManager {
 
     // TODO expose coin base address
     // public byte[] getCoinBaseAddress() { return coinBaseAddress; }
+
+    public Wallet getWallet() {
+        return wallet;
+    }
+
 }

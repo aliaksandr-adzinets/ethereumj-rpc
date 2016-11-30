@@ -2,7 +2,7 @@ package org.ethereum.rpc.DTO;
 
 import org.ethereum.core.Block;
 import org.ethereum.core.TransactionReceipt;
-import org.ethereum.db.TransactionInfo;
+import org.ethereum.core.TransactionInfo;
 import org.ethereum.util.ByteUtil;
 import org.ethereum.vm.LogInfo;
 

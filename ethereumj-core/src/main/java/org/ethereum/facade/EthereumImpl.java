@@ -19,6 +19,7 @@ import org.ethereum.mine.BlockMiner;
 import org.ethereum.net.client.PeerClient;
 import org.ethereum.net.rlpx.Node;
 import org.ethereum.net.server.ChannelManager;
+import org.ethereum.net.server.PeerServer;
 import org.ethereum.net.shh.Whisper;
 import org.ethereum.net.submit.TransactionExecutor;
 import org.ethereum.net.submit.TransactionTask;
@@ -59,6 +60,9 @@ public class EthereumImpl implements Ethereum {
 
     @Autowired
     ChannelManager channelManager;
+
+    @Autowired
+    PeerServer peerServer;
 
     @Autowired
     ApplicationContext ctx;
@@ -364,6 +368,8 @@ public class EthereumImpl implements Ethereum {
      */
     public ApplicationContext getApplicationContext() {
         return ctx;
+    }
+
     // TODO Review world manager expose
     @Override
     public WorldManager getWorldManager() { return worldManager; }

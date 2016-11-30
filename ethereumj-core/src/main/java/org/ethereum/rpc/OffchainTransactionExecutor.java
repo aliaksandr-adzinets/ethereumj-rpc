@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.ethereum.config.SystemProperties.CONFIG;
-
 /**
  * Created by Sergio on 03/11/2015.
  * Similar functionality you can find in

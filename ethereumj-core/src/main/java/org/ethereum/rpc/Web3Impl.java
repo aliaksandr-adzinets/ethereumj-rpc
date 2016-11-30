@@ -1,19 +1,12 @@
 package org.ethereum.rpc;
 
-import org.apache.commons.lang3.ArrayUtils;
-import org.ethereum.config.Constants;
 import org.ethereum.config.SystemProperties;
 import org.ethereum.core.*;
 import org.ethereum.crypto.ECKey;
 import org.ethereum.crypto.HashUtil;
-import org.ethereum.crypto.SHA3Helper;
-import org.ethereum.db.TransactionInfo;
+import org.ethereum.core.TransactionInfo;
 import org.ethereum.facade.Ethereum;
 import org.ethereum.manager.WorldManager;
-// TODO Miner related
-// import org.ethereum.mine.MinerServer;
-// import org.ethereum.mine.MinerWork;
-// import org.ethereum.mine.ProcessSPVProofIllegalStateException;
 import org.ethereum.net.server.ChannelManager;
 import org.ethereum.rpc.DTO.TransactionReceiptDTO;
 import org.ethereum.rpc.DTO.TransactionResultDTO;
@@ -30,6 +23,7 @@ import java.util.*;
 
 public class Web3Impl implements Web3 {
 
+    private static final GasCost GAS_COST = new GasCost();
     public WorldManager worldManager;
 
     public org.ethereum.facade.Repository repository;
@@ -94,7 +88,7 @@ public class Web3Impl implements Web3 {
     }
 
     public String web3_clientVersion() {
-        return base_clientVersion + "/"+SystemProperties.CONFIG.projectVersion() + "/"+SystemProperties.CONFIG.projectVersionModifier();
+        return base_clientVersion + "/"+SystemProperties.getDefault().projectVersion() + "/"+SystemProperties.getDefault().projectVersionModifier();
     };
 
     public String  web3_sha3(String data) throws Exception {
@@ -104,16 +98,16 @@ public class Web3Impl implements Web3 {
 
     public String net_version(){
             return "59"; // todo: unclear what to respond. Is it EthVersion.UPPER ?
-    };
+    }
 
-    public String net_peerCount(){
-        int n = worldManager.getPeerDiscovery().getPeers().size();
-        return TypeConverter.toJsonHex(n);
-    };
+    @Override
+    public String net_peerCount() {
+        return null;
+    }
 
     public boolean net_listening(){
         //return worldManager.getActivePeer()
-        return eth.getPeerServer().getListening();
+        return eth.getPeerServer().isListening();
     };
 
     public String eth_protocolVersion(){
@@ -299,7 +293,7 @@ public class Web3Impl implements Web3 {
         BigInteger accountNonce = account.getNonce();
         BigInteger value = args.value != null ? TypeConverter.StringNumberAsBigInt(args.value) : BigInteger.ZERO;
         BigInteger gasPrice = args.gasPrice != null ? TypeConverter.StringNumberAsBigInt(args.gasPrice) : BigInteger.ZERO;
-        BigInteger gasLimit = args.gasLimit != null ? TypeConverter.StringNumberAsBigInt(args.gasLimit) : BigInteger.valueOf(GasCost.TRANSACTION);
+        BigInteger gasLimit = args.gasLimit != null ? TypeConverter.StringNumberAsBigInt(args.gasLimit) : BigInteger.valueOf(GAS_COST.getTRANSACTION());
 
         if (args.data != null && args.data.startsWith("0x"))
             args.data = args.data.substring(2);
@@ -592,7 +586,7 @@ public class Web3Impl implements Web3 {
 
     // TODO review new method to get account by address
     private Account getAccountByAddress(String address) {
-        Collection<Account> accounts = eth.getWallet().getAccountCollection();
+        Collection<Account> accounts = eth.getWorldManager().getWallet().getAccountCollection();
 
         Account account = null;
 

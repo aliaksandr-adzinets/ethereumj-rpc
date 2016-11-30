@@ -29,7 +29,6 @@ public class TransactionReceipt {
     private Bloom bloomFilter = new Bloom();
     private List<LogInfo> logInfoList = new ArrayList<>();
 
-    private byte[] gasUsed = EMPTY_BYTE_ARRAY;
     private byte[] executionResult = EMPTY_BYTE_ARRAY;
     private String error = "";
 
@@ -178,10 +177,6 @@ public class TransactionReceipt {
     public void setCumulativeGas(long cumulativeGas) {
         this.cumulativeGas = BigIntegers.asUnsignedByteArray(BigInteger.valueOf(cumulativeGas));
         rlpEncoded = null;
-    }
-
-    public void setGasUsed(long gasUsed) {
-        this.gasUsed = BigIntegers.asUnsignedByteArray(BigInteger.valueOf(gasUsed));
     }
 
     public void setCumulativeGas(byte[] cumulativeGas) {

@@ -498,7 +498,7 @@ public class Transaction implements SerializableObject {
      * @deprecated use {@link Transaction#create(String, BigInteger, BigInteger, BigInteger, BigInteger, Integer)} instead
      */
     public static Transaction create(String to, BigInteger amount, BigInteger nonce, BigInteger gasPrice, BigInteger gasLimit){
-        return create(to, amount, nonce, gasPrice, gasLimit, null);
+        return create(to, amount, nonce, gasPrice, gasLimit, (Integer)null);
     }
 
     public static Transaction create(String to, BigInteger amount, BigInteger nonce, BigInteger gasPrice, BigInteger gasLimit, String data){
